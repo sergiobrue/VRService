@@ -1,9 +1,8 @@
-#ifndef _VRS_HTTP_REQUEST_HANDLER_H_
-#define _VRS_HTTP_REQUEST_HANDLER_H_
+#ifndef _VRS_REQUEST_HANDLER_H_
+#define _VRS_REQUEST_HANDLER_H_
 
-
-#include <boost/network/include/http/server.hpp>
-#include <boost/network/utils/thread_pool.hpp>
+#include <boost/network/protocol/http/server.hpp>
+#include <iostream>
 
 namespace VRS {
 
@@ -13,10 +12,31 @@ typedef boost::network::http::server<HTTPRequestHandler> http_server;
 
 class HTTPRequestHandler
 {
+public:
+    void operator() (http_server::request const& request,
+                     http_server::connection_ptr connection)
+    {
+        std::map<std::string, std::string> headers = {
+            {"Content-Type", "text/plain"},
+        };
+
+        std::string data("This will be a JSON soon");
+
+        connection->set_status(http_server::connection::ok);
+        connection->set_headers(headers);
+        connection->write(data);
+    }
+
+    void log(http_server::string_type const& info)
+    {
+        std::cerr << "ERROR: " << info << '\n';
+    }
 };
+
+
 
 
 }
 
-#endif /* _VRS_HTTP_REQUEST_HANDLER_H_ */
+#endif /* _VRS_REQUEST_HANDLER_H_ */
 

@@ -27,7 +27,7 @@ else(NOT CMAKE_BUILD_TYPE STREQUAL "RELEASE")
 endif(NOT CMAKE_BUILD_TYPE STREQUAL "RELEASE")
 # ---------------------------------------------
 
-set (CMAKE_CXX_FLAGS "-std=c++14 -Werror -Wall -pedantic ${CMAKE_CXX_FLAGS}")
+set (CMAKE_CXX_FLAGS "-std=c++14 -Werror -Wall ${CMAKE_CXX_FLAGS}")
 
 if (MINGW)
   list(APPEND CMAKE_PREFIX_PATH $ENV{MINGW})
@@ -39,9 +39,9 @@ IF(WIN32)
     set(CMAKE_FIND_LIBRARY_SUFFIXES .a ${CMAKE_FIND_LIBRARY_SUFFIXES})
 ENDIF(WIN32)
 
-find_package(cppnetlib 0.11.0 REQUIRED)
+find_package(cppnetlib 0.12.0 REQUIRED)
 
-add_executable(${EXECNAME} main.cc)
+add_executable(${EXECNAME} HTTPServer.cc main.cc)
 
 include_directories( ${CPPNETLIB_INCLUDE_DIRS} )
 target_link_libraries( ${EXECNAME} ${CPPNETLIB_LIBRARIES} stdc++ )

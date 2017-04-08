@@ -1,6 +1,6 @@
 #include "HTTPServer.h"
 
-namespace VRS {
+namespace vrs {
 
 HTTPServer::HTTPServer(const std::string address, const std::string port)
     : options_(requestHandler_)
@@ -14,3 +14,4 @@ void HTTPServer::Run()
 }
 
 }
+

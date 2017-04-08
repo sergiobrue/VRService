@@ -3,7 +3,7 @@
 
 #include "HTTPRequestHandler.h"
 
-namespace VRS {
+namespace vrs {
 
 class HTTPServer {
 public:

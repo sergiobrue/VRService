@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
 {
     try
     {
-        VRS::HTTPServer http_server("0.0.0.0", "31337");
+        vrs::HTTPServer http_server("0.0.0.0", "31337");
         http_server.Run();
     }
     catch (std::exception &e)

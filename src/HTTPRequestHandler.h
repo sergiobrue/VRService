@@ -4,7 +4,7 @@
 #include <boost/network/protocol/http/server.hpp>
 #include <iostream>
 
-namespace VRS {
+namespace vrs {
 
 class HTTPRequestHandler;
 
@@ -20,7 +20,7 @@ public:
             {"Content-Type", "text/plain"},
         };
 
-        std::string data("This will be a JSON soon");
+        std::string data(request.destination+"This will be a JSON soon");
 
         connection->set_status(http_server::connection::ok);
         connection->set_headers(headers);

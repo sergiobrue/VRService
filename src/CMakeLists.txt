@@ -2,6 +2,7 @@ cmake_minimum_required (VERSION 2.8.12)
 project (VRService)
 
 set (EXECNAME vrs)
+set (EXECTEST test_vrs)
 
 #Version
 set(PIN_VERSION_MAJOR 1)
@@ -41,7 +42,13 @@ ENDIF(WIN32)
 
 find_package(cppnetlib 0.12.0 REQUIRED)
 
-add_executable(${EXECNAME} HTTPServer.cc main.cc)
+add_executable(${EXECNAME} HTTPServer.cc ResourceFolder.cc ResourceFile.cc
+  User.cc Group.cc main.cc)
+
+add_executable(${EXECTEST} HTTPServer.cc ResourceFolder.cc ResourceFile.cc
+  User.cc Group.cc test.cc)
+
 
 include_directories( ${CPPNETLIB_INCLUDE_DIRS} )
 target_link_libraries( ${EXECNAME} ${CPPNETLIB_LIBRARIES} stdc++ )
+target_link_libraries( ${EXECTEST} ${CPPNETLIB_LIBRARIES} stdc++ )

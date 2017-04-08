@@ -13,6 +13,10 @@ public:
           const std::string name);
 
     ~Group();
+
+    uint64_t id() const { return id_; }
+    const std::string& name() const { return name_; }
+
 private:
     const uint64_t id_;
     const std::string name_;

@@ -48,13 +48,14 @@ public:
 
     const User* owner() const { return owner_; }
     const Group* group() const { return group_; }
+    const Permissions permissions() const { return permissions_; }
 
 protected:
     virtual void Update_json() const = 0;
 private:
     const User*  owner_;
     const Group* group_;
-    Permissions  permissions_;
+    const Permissions permissions_;
 protected:
     mutable json json_;
 private:

@@ -18,6 +18,12 @@ public:
          const std::vector<Group*> groups);
 
     ~User();
+
+    uint64_t id() const { return id_; }
+    const std::string& name() const { return name_; }
+    const std::string& home_view() const { return home_view_; }
+    const std::vector<Group*>& groups() const { return groups_; }
+
 private:
     const uint64_t    id_;
     const std::string name_;

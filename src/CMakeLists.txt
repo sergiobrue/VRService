@@ -41,9 +41,10 @@ IF(WIN32)
 ENDIF(WIN32)
 
 find_package(cppnetlib 0.12.0 REQUIRED)
+find_package(pqxx REQUIRED)
 
 add_library (vrservice STATIC HTTPServer.cc ResourceFolder.cc ResourceFile.cc
-  User.cc Group.cc Logger.cc)
+  User.cc Group.cc Logger.cc PostgresSQLResourceAdquirer.cc)
 
 add_executable(${EXECNAME} main.cc)
 
@@ -51,4 +52,4 @@ add_executable(${EXECTEST} test.cc)
 
 include_directories( ${CPPNETLIB_INCLUDE_DIRS} )
 target_link_libraries( ${EXECNAME} vrservice ${CPPNETLIB_LIBRARIES} stdc++ pqxx pq)
-target_link_libraries( ${EXECTEST} vrservice ${CPPNETLIB_LIBRARIES} stdc++ )
+target_link_libraries( ${EXECTEST} vrservice ${CPPNETLIB_LIBRARIES} stdc++ pqxx pq)

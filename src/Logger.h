@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <syslog.h>
+#include <stdarg.h>
 
 namespace vrs {
 

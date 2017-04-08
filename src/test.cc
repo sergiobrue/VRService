@@ -1,5 +1,6 @@
 #include "ResourceFile.h"
 #include "ResourceFolder.h"
+#include "PostgresSQLResourceAdquirer.h"
 
 #include <iostream>
 
@@ -23,6 +24,10 @@ int main(int argc, char *argv[])
     final_json["files"].push_back(resource_file.as_json());
 
     std::cout << final_json << std::endl;
+
+    vrs::PostgresSQLResourceAdquirer psra("dbname=postgres user=vr password=vr hostaddr=192.168.1.200 port=5432 requiressl=1");
+
+    std::cout << "DB Open: " << psra.Connect() << std::endl;
 
     return 0;
 }

@@ -42,13 +42,13 @@ ENDIF(WIN32)
 
 find_package(cppnetlib 0.12.0 REQUIRED)
 
-add_executable(${EXECNAME} HTTPServer.cc ResourceFolder.cc ResourceFile.cc
-  User.cc Group.cc main.cc)
+add_library (vrservice STATIC HTTPServer.cc ResourceFolder.cc ResourceFile.cc
+  User.cc Group.cc Logger.cc)
 
-add_executable(${EXECTEST} HTTPServer.cc ResourceFolder.cc ResourceFile.cc
-  User.cc Group.cc test.cc)
+add_executable(${EXECNAME} main.cc)
 
+add_executable(${EXECTEST} test.cc)
 
 include_directories( ${CPPNETLIB_INCLUDE_DIRS} )
-target_link_libraries( ${EXECNAME} ${CPPNETLIB_LIBRARIES} stdc++ )
-target_link_libraries( ${EXECTEST} ${CPPNETLIB_LIBRARIES} stdc++ )
+target_link_libraries( ${EXECNAME} vrservice ${CPPNETLIB_LIBRARIES} stdc++ pqxx pq)
+target_link_libraries( ${EXECTEST} vrservice ${CPPNETLIB_LIBRARIES} stdc++ )

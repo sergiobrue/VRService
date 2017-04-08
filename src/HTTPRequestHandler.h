@@ -1,6 +1,8 @@
 #ifndef _VRS_REQUEST_HANDLER_H_
 #define _VRS_REQUEST_HANDLER_H_
 
+#include "Logger.h"
+
 #include <boost/network/protocol/http/server.hpp>
 #include <iostream>
 
@@ -20,11 +22,13 @@ public:
             {"Content-Type", "text/plain"},
         };
 
-        std::string data(request.destination+"This will be a JSON soon");
+        std::string msg("Destination (\""+request.destination+"\")\n");
+
+        LOGD(msg.c_str());
 
         connection->set_status(http_server::connection::ok);
         connection->set_headers(headers);
-        connection->write(data);
+        connection->write(msg);
     }
 
     void log(http_server::string_type const& info)

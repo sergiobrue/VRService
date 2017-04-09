@@ -2,8 +2,18 @@
 
 VR Service aims to be the indexing service of the VR videos
 
-## LICENSE
+## Configuration
 
-This is a private project.
+Configuration should be stored in `/etc/vrs.conf` as a json file.
+This is an example:
 
-2017 &copy; Javier Lopez and Sergio Perez
+```json
+{
+    "acquirer":"psql"
+    "user":"database_user_name",
+    "password":"database_user_password",
+    "db":"remote_db_name",
+    "host":"remote_host",
+    "port":5432
+}
+```

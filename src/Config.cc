@@ -1,0 +1,66 @@
+#include "Config.h"
+#include "Logger.h"
+#include "json.hpp"
+
+#include <fstream>
+
+namespace vrs {
+
+class ConfigFileOpenException : public std::exception
+{
+    const char* what() { return "Error opening config file"; }
+};
+
+class ConfigFileParsingException : public std::exception
+{
+    const char* what() { return "Error parsing config file"; }
+};
+
+
+Config::Config()
+{
+    const char* const CONFIG_FILE_PATH = "/etc/vrs.conf";
+
+    std::ifstream input_file(CONFIG_FILE_PATH);
+
+    if (!input_file.is_open())
+    {
+        LOGD("Error: Opening config file [%s]", CONFIG_FILE_PATH);
+        throw ConfigFileOpenException();
+    }
+
+    nlohmann::json json_obj;
+
+    try
+    {
+        input_file >> json_obj;
+        LOGD("Getting Acquirer Name");
+        resource_acquirer_name_ = json_obj["acquirer"];
+        LOGD("Getting User");
+        resource_acquirer_user_ = json_obj["user"];
+        LOGD("Getting Password");
+        resource_acquirer_password_ = json_obj["password"];
+        LOGD("Getting DB");
+        resource_acquirer_db_ = json_obj["db"];
+        LOGD("Getting Port");
+        resource_acquirer_port_ = json_obj["port"];
+        LOGD("Getting RequireSSL");
+        resource_acquirer_require_ssl_ = json_obj["requiressl"];
+    }
+
+    catch (std::exception& e)
+    {
+        LOGD("Error: Parsing config file [%s] - %s", CONFIG_FILE_PATH, e.what());
+        throw ConfigFileParsingException();
+    }
+
+
+}
+
+Config::~Config()
+{
+}
+
+
+
+}

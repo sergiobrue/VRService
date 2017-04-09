@@ -22,7 +22,9 @@ void Logger::log(decltype(LOG_INFO) log_level, const char* msg, ...)
 
     if (log_level <= log_level_ && print_to_stdout_)
     {
-        ::printf(msg, args);
+        static char fmt_msg[4098];
+        vsnprintf(fmt_msg, sizeof(fmt_msg), msg, args);
+        printf("%s\n", fmt_msg);
     }
     va_end(args);
 }

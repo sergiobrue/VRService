@@ -1,12 +1,18 @@
 #include "ResourceFile.h"
 #include "ResourceFolder.h"
-#include "PostgresSQLResourceAdquirer.h"
+#include "PostgresSQLResourceAcquirer.h"
+#include "Logger.h"
+#include "Config.h"
+#include "User.h"
 
 #include <iostream>
 
 int main(int argc, char *argv[])
 {
     // TODO - Use CPPUNIT or some other unit testing framework
+
+    vrs::Logger::instance().SetLevel(LOG_DEBUG);
+    vrs::Logger::instance().EnableStdout();
 
     vrs::Group test_group(0, "Test Group");
     vrs::User test_user(0, "Test User", "View0", {&test_group});
@@ -25,9 +31,22 @@ int main(int argc, char *argv[])
 
     std::cout << final_json << std::endl;
 
-    vrs::PostgresSQLResourceAdquirer psra("dbname=postgres user=vr password=vr hostaddr=192.168.1.200 port=5432 requiressl=1");
+    try
+    {
+        vrs::Config config;
+    }
+    catch (std::exception& e)
+    {
+        std::cout << e.what() << std::endl;
+    }
+
+    vrs::PostgresSQLResourceAcquirer psra("dbname=vrdb user=vr password=vr hostaddr=192.168.1.200 port=5432 requiressl=1");
 
     std::cout << "DB Open: " << psra.Connect() << std::endl;
+
+    std::unordered_map<uint64_t, vrs::User*> users;
+    std::cout << "GetUsers: " <<  psra.GetUsers(users) << std::endl;
+
 
     return 0;
 }

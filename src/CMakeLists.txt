@@ -44,7 +44,7 @@ find_package(cppnetlib 0.12.0 REQUIRED)
 find_package(pqxx REQUIRED)
 
 add_library (vrservice STATIC HTTPServer.cc ResourceFolder.cc ResourceFile.cc
-  User.cc Group.cc Logger.cc PostgresSQLResourceAdquirer.cc)
+  User.cc Group.cc Logger.cc PostgresSQLResourceAcquirer.cc Config.cc)
 
 add_executable(${EXECNAME} main.cc)
 

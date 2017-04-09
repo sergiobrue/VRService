@@ -1,5 +1,7 @@
 #include "User.h"
 
+#include <cstdio>
+
 namespace vrs {
 
 User::User(const uint64_t id,
@@ -16,5 +18,15 @@ User::User(const uint64_t id,
 User::~User()
 {
 }
+
+const char* User::c_str() const
+{
+    static char str[4098] = {0};
+    snprintf(str, sizeof(str), "(id⁼%ju, name=\"%s\", home_view=\"%s\")",
+             uintmax_t(id_), name_.c_str(), home_view_.c_str());
+
+    return str;
+}
+
 
 }

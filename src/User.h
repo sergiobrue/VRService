@@ -15,7 +15,7 @@ public:
     User(const uint64_t id,
          const std::string& name,
          const std::string& home_view,
-         const std::vector<Group*> groups);
+         const std::vector<Group*> groups={});
 
     ~User();
 
@@ -23,6 +23,8 @@ public:
     const std::string& name() const { return name_; }
     const std::string& home_view() const { return home_view_; }
     const std::vector<Group*>& groups() const { return groups_; }
+
+    const char* c_str() const;
 
 private:
     const uint64_t    id_;

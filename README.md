@@ -52,7 +52,7 @@ Please note that if you had to download the binaries you need to setup one env v
 
 ```
 $ export CPPNETLIB_ROOT="<path_where_you_decompressed_binaries>/cpp-netlib-build"
-$ export CPPNETLIB_ROOT="/home/brue/cpp-netlib-build" -DCPPNETLIB_PREFIX_PATH=${CPPNETLIB_ROOT}
+$ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -DCPPNETLIB_PREFIX_PATH=${CPPNETLIB_ROOT}
 ```
 
 # Configuration

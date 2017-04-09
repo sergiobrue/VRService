@@ -21,6 +21,10 @@ To install in Debian:
 $ aptitude install libsll-dev libcppnetlib-dev libpqxx-dev libboost-all-dev 
 ```
 
+Please note that the current version of cppnet-lib in Debian is version 0.11.
+You can download a precompiled binary of a newer version from https://goo.gl/Qxwf3X
+
+
 ## Running CMake
 
 To install CMake and Ninja in Debian:
@@ -42,6 +46,13 @@ $ cmake -G Ninja -DCMAKE_BUILD_TYPE=Release
 
 ```
 $ ninja
+```
+
+Please note that if you had to download the binaries you need to setup one env variable, and pass another one to cmake:
+
+```
+$ export CPPNETLIB_ROOT="<path_where_you_decompressed_binaries>/cpp-netlib-build"
+$ export CPPNETLIB_ROOT="/home/brue/cpp-netlib-build" -DCPPNETLIB_PREFIX_PATH=${CPPNETLIB_ROOT}
 ```
 
 # Configuration

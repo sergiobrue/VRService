@@ -1,3 +1,5 @@
+[![build status](https://gitlab.com/VirtualDreams/VRService/badges/master/build.svg)](https://gitlab.com/VirtualDreams/VRService/commits/master)
+
 # What's VR Service
 
 VR Service aims to be the indexing service of the VR videos

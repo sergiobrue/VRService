@@ -7,7 +7,7 @@ before_script:
   - mkdir -p ~/.ssh
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   - apt-get update -qq && apt-get install -y -qq libssl-dev libpqxx-dev libboost-all-dev g++ gcc cmake ninja-build git curl
-  - curl https://transfer.sh/dQLUV/cpp-netlib-build.tar.bz2 -o cpp-netlib-build.tar.bz2
+  - curl -L https://goo.gl/Qxwf3X -o cpp-netlib-build.tar.bz2
   - export CDIR=`pwd`
   - echo $CDIR
   - tar xjf- cpp-netlib-build.tar.bz2

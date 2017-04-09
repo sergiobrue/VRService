@@ -47,9 +47,10 @@ add_library (vrservice STATIC HTTPServer.cc ResourceFolder.cc ResourceFile.cc
   User.cc Group.cc Logger.cc PostgresSQLResourceAcquirer.cc Config.cc)
 
 add_executable(${EXECNAME} main.cc)
-
-add_executable(${EXECTEST} test.cc)
-
 include_directories( ${CPPNETLIB_INCLUDE_DIRS} )
 target_link_libraries( ${EXECNAME} vrservice ${CPPNETLIB_LIBRARIES} stdc++ pqxx pq)
-target_link_libraries( ${EXECTEST} vrservice ${CPPNETLIB_LIBRARIES} stdc++ pqxx pq)
+
+if(NOT CMAKE_BUILD_TYPE STREQUAL "RELEASE")
+  add_executable(${EXECTEST} test.cc)
+  target_link_libraries( ${EXECTEST} vrservice ${CPPNETLIB_LIBRARIES} stdc++ pqxx pq)
+endif(NOT CMAKE_BUILD_TYPE STREQUAL "RELEASE")

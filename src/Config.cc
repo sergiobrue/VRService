@@ -42,6 +42,8 @@ Config::Config()
         resource_acquirer_password_ = json_obj["password"];
         LOGD("Getting DB");
         resource_acquirer_db_ = json_obj["db"];
+        LOGD("Getting Host");
+        resource_acquirer_host_ = json_obj["host"];
         LOGD("Getting Port");
         resource_acquirer_port_ = json_obj["port"];
         LOGD("Getting RequireSSL");

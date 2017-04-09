@@ -22,9 +22,9 @@ private:
     std::string resource_acquirer_user_;
     std::string resource_acquirer_password_;
     std::string resource_acquirer_db_;
-
-    uint16_t resource_acquirer_port_;
-    bool resource_acquirer_require_ssl_;
+    std::string resource_acquirer_host_;
+    uint16_t    resource_acquirer_port_;
+    bool        resource_acquirer_require_ssl_;
 };
 
 

@@ -40,8 +40,15 @@ IF(WIN32)
     set(CMAKE_FIND_LIBRARY_SUFFIXES .a ${CMAKE_FIND_LIBRARY_SUFFIXES})
 ENDIF(WIN32)
 
+if (CPPNETLIB_PREFIX_PATH)
+  set (CMAKE_PREFIX_PATH ${CPPNETLIB_PREFIX_PATH})
+  message ("| Using CPPNETLIB_PREFIX_PATH: ${CPPNETLIB_PREFIX_PATH}")
+endif (CPPNETLIB_PREFIX_PATH)
+
 find_package(cppnetlib 0.12.0 REQUIRED)
 find_package(pqxx REQUIRED)
+
+message("| CPPNETLIB I(${CPPNETLIB_INCLUDE_DIRS}) L(${CPPNETLIB_LIBRARIES})")
 
 add_library (vrservice STATIC HTTPServer.cc ResourceFolder.cc ResourceFile.cc
   User.cc Group.cc Logger.cc PostgresSQLResourceAcquirer.cc Config.cc)

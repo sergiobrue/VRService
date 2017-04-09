@@ -1,0 +1,27 @@
+image: debian:sid
+
+before_script:
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_DEPLOY_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  - apt-get update -qq && apt-get install -y -qq libssl-dev libpqxx-dev libboost-all-dev g++ gcc cmake ninja-build git curl
+  - curl https://transfer.sh/dQLUV/cpp-netlib-build.tar.bz2 -o cpp-netlib-build.tar.bz2
+  - export CDIR=`pwd`
+  - echo $CDIR
+  - tar xjf- cpp-netlib-build.tar.bz2
+  - export CPPNETLIB_ROOT="$CDIR/cpp-netlib-build"
+
+stages:
+  - build
+
+build:
+  stage: build
+  script:
+    - cd src
+    - cmake -G Ninja -DCPPNETLIB_PREFIX_PATH=$CPPNETLIB_ROOT
+    - ninja
+  artifacts:
+    paths:
+    - service/build/outputs/

@@ -3,6 +3,7 @@
 #include "json.hpp"
 
 #include <fstream>
+#include <sstream>
 
 namespace vrs {
 
@@ -63,6 +64,26 @@ Config::~Config()
 {
 }
 
+std::string Config::GetConnectionString() const
+{
+    if (resource_acquirer_name_ == "psql")
+    {
+        std::stringstream ss_port;
+        ss_port << resource_acquirer_port_;
+        std::stringstream ss_ssl;
+        ss_ssl << resource_acquirer_require_ssl_;
+
+        return "dbname=" + resource_acquirer_db_
+            + " user=" + resource_acquirer_user_
+            + " password=" + resource_acquirer_password_
+            + " hostaddr=" + resource_acquirer_host_
+            + " port=" + ss_port.str()
+            + " requiressl=" + ss_ssl.str();
+
+    }
+
+    return "NOT_SUPPORTED_ACQUIRER";
+}
 
 
 }

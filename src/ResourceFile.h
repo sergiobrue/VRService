@@ -8,7 +8,7 @@ namespace vrs {
 
 class ResourceFile : public Resource {
 public:
-    enum FileType_t {
+    enum FileType_t : uint64_t {
         VIDEO,
         // -- Add above this --
         MAX_FILETYPE
@@ -22,9 +22,20 @@ public:
                  const std::string name,
                  const std::string description,
                  const std::string uri_thumbnail,
-                 const std::string uri_file);
+                 const std::string uri_file,
+                 const uint16_t parent_folder);
 
     virtual ~ResourceFile() final;
+
+    uint64_t id() const { return id_; }
+    FileType_t  type() const { return type_; }
+    const std::string& description() const { return description_; }
+    const std::string& uri_thumbnail() const { return uri_thumbnail_; }
+    const std::string& uri_file() const { return uri_file_; }
+
+    uint64_t parent_folder() const { return parent_folder_; }
+
+    const char* c_str() const;
 
 private:
     static const std::string FileTypes_Str[MAX_FILETYPE];
@@ -33,10 +44,10 @@ private:
 
     const uint64_t    id_;
     const FileType_t  type_;
-    const std::string name_;
     const std::string description_;
     const std::string uri_thumbnail_;
     const std::string uri_file_;
+    const uint16_t parent_folder_;
 };
 
 }

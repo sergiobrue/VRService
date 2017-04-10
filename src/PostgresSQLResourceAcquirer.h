@@ -16,7 +16,16 @@ public:
 
     bool Connect() final;
     bool GetUsers(std::unordered_map<uint64_t, User*>& users) const final;
-    bool GetGroups(std::vector<Group*>& groups) const final;
+    bool GetGroups(std::unordered_map<uint64_t, Group*>&  groups) const final;
+    bool GetFolders(std::unordered_map<uint64_t, ResourceFolder*>& folders,
+                    const std::unordered_map<uint64_t, User*>& users,
+                    const std::unordered_map<uint64_t, Group*>&  groups) final;
+
+    bool GetFiles(std::unordered_map<uint64_t, ResourceFile*>& files,
+                  const std::unordered_map<uint64_t, User*>& users,
+                  const std::unordered_map<uint64_t, Group*>&  groups) final;
+
+    bool GetViews(std::unordered_map<uint64_t, ResourceView*>& views) final;
 
     ResourceAcquirer::ResourceAcquirer_t type() const final;
 

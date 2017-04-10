@@ -2,6 +2,7 @@
 #define _VRS_REQUEST_HANDLER_H_
 
 #include "Logger.h"
+#include "ResourceMapper.h"
 
 #include <boost/network/protocol/http/server.hpp>
 #include <iostream>
@@ -22,11 +23,26 @@ public:
             {"Content-Type", "text/plain"},
         };
 
-        std::string msg("Destination (\""+request.destination+"\")\n");
+        const ResourceFolder* folder = ResourceMapper::instance().FindFolderFromURI(request.destination);
 
-        LOGD(msg.c_str());
+        std::string msg;
 
-        connection->set_status(http_server::connection::ok);
+        if (folder)
+        {
+            msg = folder->as_json().dump();
+
+            connection->set_status(http_server::connection::ok);
+
+            LOGD("Found: [%s]", folder->c_str());
+        }
+        else
+        {
+            LOGD("Request [%s] Not found", request.destination.c_str());
+            connection->set_status(http_server::connection::not_found);
+            msg = "Ops! 404 Not found\n";
+
+        }
+
         connection->set_headers(headers);
         connection->write(msg);
     }
@@ -43,4 +59,3 @@ public:
 }
 
 #endif /* _VRS_REQUEST_HANDLER_H_ */
-

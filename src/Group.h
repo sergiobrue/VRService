@@ -17,6 +17,8 @@ public:
     uint64_t id() const { return id_; }
     const std::string& name() const { return name_; }
 
+    const char* c_str() const;
+
 private:
     const uint64_t id_;
     const std::string name_;

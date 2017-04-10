@@ -4,6 +4,7 @@
 #include "Logger.h"
 #include "Config.h"
 #include "User.h"
+#include "URIUtils.h"
 
 #include <iostream>
 
@@ -16,13 +17,13 @@ int main(int argc, char *argv[])
 
     vrs::Group test_group(0, "Test Group");
     vrs::User test_user(0, "Test User", "View0", {&test_group});
-    vrs::Permissions test_permissions;
+    vrs::Permissions test_permissions(0777);
 
     vrs::ResourceFile resource_file(&test_user, &test_group, test_permissions, 0, vrs::ResourceFile::VIDEO, "Test File", "Test File Description",
-                                    "https://example.com/thumbnail.jpg", "https://example.com/stream.mp4");
+                                    "https://example.com/thumbnail.jpg", "https://example.com/stream.mp4", 0);
 
     vrs::ResourceFolder resource_folder(&test_user, &test_group, test_permissions, 0, "Test Folder", "Test Folder Description",
-                                        "https://example.com/thumbnail_folder.jpg", "https://example.com/scene.jpg", {});
+                                        "https://example.com/thumbnail_folder.jpg", "https://example.com/scene.jpg", 0);
 
     json final_json;
 
@@ -34,6 +35,7 @@ int main(int argc, char *argv[])
     try
     {
         vrs::Config config;
+        std::cout << config.GetConnectionString() << std::endl;
     }
     catch (std::exception& e)
     {
@@ -47,6 +49,21 @@ int main(int argc, char *argv[])
     std::unordered_map<uint64_t, vrs::User*> users;
     std::cout << "GetUsers: " <<  psra.GetUsers(users) << std::endl;
 
+    std::unordered_map<uint64_t, vrs::Group*> groups;
+    std::cout << "GetGroups: " <<  psra.GetGroups(groups) << std::endl;
+
+    std::unordered_map<uint64_t, vrs::ResourceFolder*> folders;
+    std::cout << "GetFolders: " <<  psra.GetFolders(folders, users, groups) << std::endl;
+
+    std::unordered_map<uint64_t, vrs::ResourceFile*> files;
+    std::cout << "GetFiles: " <<  psra.GetFiles(files, users, groups) << std::endl;
+
+    std::vector<std::string> folders_str;
+    vrs::URIUtils::URIToFolders("/videos/urbazo/ciudad%20real/", folders_str);
+
+    std::cout << "URIToFolders:" << std::endl;
+
+    for (auto& s : folders_str) std::cout << s << std::endl;
 
     return 0;
 }

@@ -62,11 +62,12 @@ This is an example:
 
 ```json
 {
-    "acquirer":"psql"
-    "user":"database_user_name",
-    "password":"database_user_password",
-    "db":"remote_db_name",
-    "host":"remote_host",
-    "port":5432
+    "acquirer":"psql",
+    "user":"vr",
+    "password":"vr",
+    "db":"vrdb",
+    "host":"192.168.1.200",
+    "port":5432,
+    "requiressl": true
 }
 ```

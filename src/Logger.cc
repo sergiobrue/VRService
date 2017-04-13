@@ -2,6 +2,9 @@
 
 namespace vrs {
 
+LogLevel_t Logger::log_level_ = LOG_EMERG;
+
+
 Logger::Logger()
     : print_to_stdout_(false)
 {

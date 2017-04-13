@@ -12,7 +12,7 @@ public:
 
 ResourceMapper::ResourceMapper()
 {
-    LOGD("+---- Resource Mapper");
+    VRS_LOG_DEBUG("+---- Resource Mapper");
 
     PostgresSQLResourceAcquirer psra(config_.GetConnectionString());
 

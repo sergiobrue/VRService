@@ -26,7 +26,7 @@ Config::Config()
 
     if (!input_file.is_open())
     {
-        LOGD("Error: Opening config file [%s]", CONFIG_FILE_PATH);
+        VRS_LOG_DEBUG("Error: Opening config file [%s]", CONFIG_FILE_PATH);
         throw ConfigFileOpenException();
     }
 
@@ -34,27 +34,27 @@ Config::Config()
 
     try
     {
-        LOGD("+---- Loading Config");
+        VRS_LOG_DEBUG("+---- Loading Config");
         input_file >> json_obj;
-        LOGD("| Getting Acquirer Name");
+        VRS_LOG_DEBUG("| Getting Acquirer Name");
         resource_acquirer_name_ = json_obj["acquirer"];
-        LOGD("| Getting User");
+        VRS_LOG_DEBUG("| Getting User");
         resource_acquirer_user_ = json_obj["user"];
-        LOGD("| Getting Password");
+        VRS_LOG_DEBUG("| Getting Password");
         resource_acquirer_password_ = json_obj["password"];
-        LOGD("| Getting DB");
+        VRS_LOG_DEBUG("| Getting DB");
         resource_acquirer_db_ = json_obj["db"];
-        LOGD("| Getting Host");
+        VRS_LOG_DEBUG("| Getting Host");
         resource_acquirer_host_ = json_obj["host"];
-        LOGD("| Getting Port");
+        VRS_LOG_DEBUG("| Getting Port");
         resource_acquirer_port_ = json_obj["port"];
-        LOGD("| Getting RequireSSL");
+        VRS_LOG_DEBUG("| Getting RequireSSL");
         resource_acquirer_require_ssl_ = json_obj["requiressl"];
     }
 
     catch (std::exception& e)
     {
-        LOGD("Error: Parsing config file [%s] - %s", CONFIG_FILE_PATH, e.what());
+        VRS_LOG_DEBUG("Error: Parsing config file [%s] - %s", CONFIG_FILE_PATH, e.what());
         throw ConfigFileParsingException();
     }
 

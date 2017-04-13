@@ -2,18 +2,14 @@
 #define _VRS_REQUEST_HANDLER_H_
 
 #include "Logger.h"
-#include "ResourceMapper.h"
-#include "TimeMeasurer.h"
+
+#include "HTTPRequestGETHandler.h"
 
 #include <boost/network/protocol/http/server.hpp>
 #include <iostream>
 
 
 namespace vrs {
-
-class HTTPRequestHandler;
-
-typedef boost::network::http::server<HTTPRequestHandler> http_server;
 
 class HTTPRequestHandler
 {
@@ -22,41 +18,33 @@ public:
                      http_server::connection_ptr connection)
     {
 
-        LOGI("Request: [%s][%s]", request.method.c_str(), request.destination.c_str());
+        VRS_LOG_INFO("Request: [%s][%s]", request.method.c_str(), request.destination.c_str());
 
         TimeMeasurer time_measurer;
 
-        std::map<std::string, std::string> headers = { {"Content-Type", "text/plain"} };
+        const std::map<std::string, std::string> headers ({{"Content-Type", "text/plain"}});
 
-        std::string msg;
+        std::string returned_msg;
 
         if (request.method.c_str()[0]=='G')
         {
-            // TODO - Method Handler.
-            // GET method
-            const ResourceFolder* folder = ResourceMapper::instance().FindFolderFromURI(request.destination);
-
-            if (folder)
+            HTTPRequestGETHandler GET_handler;
+            GET_handler.ProcessRequest(request, connection, returned_msg);
+        }
+        else if (request.method.c_str()[0]=='P')
+        {
+            if (request.method.c_str()[1]=='O')
             {
-                msg = folder->as_json().dump();
-
-                connection->set_status(http_server::connection::ok);
-
-                LOGD("Found: [%s]", folder->c_str());
+                // POST ---
             }
-            else
-            {
-                LOGD("Request [%s] Not found", request.destination.c_str());
-                connection->set_status(http_server::connection::not_found);
-                msg = "404 Not found\n";
-            }
+            // else if (request.method.c_str()[1]=='U') { /* PUT */  }
         }
 
         connection->set_headers(headers);
-        connection->write(msg);
+        connection->write(returned_msg);
 
-        LOGD("Request took %f seconds",
-             time_measurer.diff_with_last_call_seconds());
+        VRS_LOG_INFO("Request took %f seconds",
+                     time_measurer.diff_with_last_call_seconds());
     }
 
     void log(http_server::string_type const& info)

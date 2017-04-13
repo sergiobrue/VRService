@@ -28,7 +28,7 @@ ResourceFolder::~ResourceFolder()
 
 void ResourceFolder::Update_json() const
 {
-    LOGD("Updating JSON for folder [%s] ", name().c_str());
+    VRS_LOG_DEBUG("Updating JSON for folder [%s] ", name().c_str());
 
     json_.clear();
 

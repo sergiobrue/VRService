@@ -27,7 +27,6 @@ public:
 
     virtual ~ResourceFile() final;
 
-    uint64_t id() const { return id_; }
     FileType_t  type() const { return type_; }
     const std::string& description() const { return description_; }
     const std::string& uri_thumbnail() const { return uri_thumbnail_; }
@@ -37,12 +36,11 @@ public:
 
     const char* c_str() const;
 
+    virtual const json as_json(const User* user) const final;
+
 private:
     static const std::string FileTypes_Str[MAX_FILETYPE];
 
-    virtual void Update_json() const final;
-
-    const uint64_t    id_;
     const FileType_t  type_;
     const std::string description_;
     const std::string uri_thumbnail_;

@@ -2,7 +2,7 @@
 
 namespace vrs {
 
-LogLevel_t Logger::log_level_ = LOG_EMERG;
+LogLevel_t Logger::log_level_ = LOG_ERR;
 
 
 Logger::Logger()
@@ -27,6 +27,7 @@ void Logger::log(decltype(LOG_INFO) log_level, const char* msg, ...)
     {
         static char fmt_msg[4098];
         vsnprintf(fmt_msg, sizeof(fmt_msg), msg, args);
+        std::lock_guard<std::mutex> lock_(write_mutex_);
         printf("%s\n", fmt_msg);
     }
     va_end(args);

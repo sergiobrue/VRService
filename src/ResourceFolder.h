@@ -23,7 +23,6 @@ public:
 
     virtual ~ResourceFolder() final;
 
-    uint64_t id() const { return id_; }
     const std::string& description() const { return description_; }
     const std::string& uri_thumbnail() const { return uri_thumbnail_; }
     const std::string& uri_scene() const { return uri_scene_; }
@@ -38,10 +37,9 @@ public:
 
     const char* c_str() const;
 
-private:
-    virtual void Update_json() const final;
+    virtual const json as_json(const User* user) const final;
 
-    const uint64_t    id_;
+private:
     const std::string description_;
     const std::string uri_thumbnail_;
     const std::string uri_scene_;

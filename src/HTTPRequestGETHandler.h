@@ -20,7 +20,7 @@ public:
 
         if (folder)
         {
-            msg = folder->as_json().dump();
+            msg = folder->as_json(nullptr).dump();
             connection->set_status(http_server::connection::ok);
             VRS_LOG_DEBUG("Found: [%s]", folder->c_str());
         }

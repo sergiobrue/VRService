@@ -1,5 +1,6 @@
 #include "ResourceFolder.h"
 #include "ResourceFile.h"
+#include "Logger.h"
 
 namespace vrs {
 
@@ -27,38 +28,30 @@ ResourceFolder::~ResourceFolder()
 
 void ResourceFolder::Update_json() const
 {
+    LOGD("Updating JSON for folder [%s] ", name().c_str());
+
+    json_.clear();
+
     json_["id"] = id_;
     json_["name"] = name();
     json_["description"] = description_;
     json_["uri_thumbnail"] = uri_thumbnail_;
     json_["uri_scene"] = uri_scene_;
 
-    json folders_json;
-
     for_each(child_folders_.begin(), child_folders_.end(),
-             [&folders_json](auto it)
+             [this](auto it)
              {
-                 json tuple;
-                 tuple["id"] = it->id();
-                 tuple["name"] = it->name();
-                 tuple["uri_thumbmail"] = it->uri_thumbnail();
-                 folders_json.push_back(tuple);
+                 if (it->id() != this->id())
+                     json_["folders"].push_back(it->as_json());
              }
         );
-
-    json_["folders"] = folders_json;
-
-    json files_json;
 
     for_each(child_files_.begin(), child_files_.end(),
-             [&files_json](auto it)
+             [this](auto it)
              {
-                 files_json.push_back(it->as_json());
+                 json_["files"].push_back(it->as_json());
              }
         );
-
-    json_["files"] = folders_json;
-
 }
 
 void ResourceFolder::PushFile(const ResourceFile* file)

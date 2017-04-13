@@ -10,6 +10,7 @@ namespace vrs {
 using LogLevel_t =  decltype(LOG_INFO);
 
 #define LOGD(...) vrs::Logger::instance().log(LOG_DEBUG, __VA_ARGS__);
+#define LOGI(...) vrs::Logger::instance().log(LOG_INFO, __VA_ARGS__);
 
 class Logger {
 public:

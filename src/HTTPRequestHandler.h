@@ -3,9 +3,11 @@
 
 #include "Logger.h"
 #include "ResourceMapper.h"
+#include "TimeMeasurer.h"
 
 #include <boost/network/protocol/http/server.hpp>
 #include <iostream>
+
 
 namespace vrs {
 
@@ -19,32 +21,42 @@ public:
     void operator() (http_server::request const& request,
                      http_server::connection_ptr connection)
     {
-        std::map<std::string, std::string> headers = {
-            {"Content-Type", "text/plain"},
-        };
 
-        const ResourceFolder* folder = ResourceMapper::instance().FindFolderFromURI(request.destination);
+        LOGI("Request: [%s][%s]", request.method.c_str(), request.destination.c_str());
+
+        TimeMeasurer time_measurer;
+
+        std::map<std::string, std::string> headers = { {"Content-Type", "text/plain"} };
 
         std::string msg;
 
-        if (folder)
+        if (request.method.c_str()[0]=='G')
         {
-            msg = folder->as_json().dump();
+            // TODO - Method Handler.
+            // GET method
+            const ResourceFolder* folder = ResourceMapper::instance().FindFolderFromURI(request.destination);
 
-            connection->set_status(http_server::connection::ok);
+            if (folder)
+            {
+                msg = folder->as_json().dump();
 
-            LOGD("Found: [%s]", folder->c_str());
-        }
-        else
-        {
-            LOGD("Request [%s] Not found", request.destination.c_str());
-            connection->set_status(http_server::connection::not_found);
-            msg = "Ops! 404 Not found\n";
+                connection->set_status(http_server::connection::ok);
 
+                LOGD("Found: [%s]", folder->c_str());
+            }
+            else
+            {
+                LOGD("Request [%s] Not found", request.destination.c_str());
+                connection->set_status(http_server::connection::not_found);
+                msg = "404 Not found\n";
+            }
         }
 
         connection->set_headers(headers);
         connection->write(msg);
+
+        LOGD("Request took %f seconds",
+             time_measurer.diff_with_last_call_seconds());
     }
 
     void log(http_server::string_type const& info)

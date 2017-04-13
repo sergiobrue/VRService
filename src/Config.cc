@@ -34,20 +34,21 @@ Config::Config()
 
     try
     {
+        LOGD("+---- Loading Config");
         input_file >> json_obj;
-        LOGD("Getting Acquirer Name");
+        LOGD("| Getting Acquirer Name");
         resource_acquirer_name_ = json_obj["acquirer"];
-        LOGD("Getting User");
+        LOGD("| Getting User");
         resource_acquirer_user_ = json_obj["user"];
-        LOGD("Getting Password");
+        LOGD("| Getting Password");
         resource_acquirer_password_ = json_obj["password"];
-        LOGD("Getting DB");
+        LOGD("| Getting DB");
         resource_acquirer_db_ = json_obj["db"];
-        LOGD("Getting Host");
+        LOGD("| Getting Host");
         resource_acquirer_host_ = json_obj["host"];
-        LOGD("Getting Port");
+        LOGD("| Getting Port");
         resource_acquirer_port_ = json_obj["port"];
-        LOGD("Getting RequireSSL");
+        LOGD("| Getting RequireSSL");
         resource_acquirer_require_ssl_ = json_obj["requiressl"];
     }
 

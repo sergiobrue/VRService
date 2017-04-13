@@ -1,5 +1,7 @@
 #include "HTTPServer.h"
 #include "Logger.h"
+#include "ResourceMapper.h"
+
 
 #include <iostream>
 
@@ -12,8 +14,9 @@ int main(int argc, char *argv[])
 
     try
     {
+        vrs::ResourceMapper::instance();
         vrs::HTTPServer http_server("0.0.0.0", "31337");
-        LOGD("Running Server...\n");
+        LOGD("\nRunning Server...\n");
         http_server.Run();
     }
     catch (std::exception& e)

@@ -75,11 +75,9 @@ public:
 
     virtual const json& as_json() const final
     {
-        if (!json_updated_)
-        {
-            Update_json();
-            json_updated_ = true;
-        }
+        // TODO - Add owner, group here
+
+        Update_json();
         return json_;
     }
 

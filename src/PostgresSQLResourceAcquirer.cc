@@ -16,6 +16,8 @@ PostgresSQLResourceAcquirer::~PostgresSQLResourceAcquirer()
 
 bool PostgresSQLResourceAcquirer::Connect()
 {
+    LOGD("Connecting to PostgresSQL [%s]", connection_string_.c_str());
+
     try {
     connection_ = new pqxx::connection(connection_string_);
     }
@@ -31,6 +33,8 @@ bool PostgresSQLResourceAcquirer::GetUsers(std::unordered_map<uint64_t, User*>& 
 {
     if (!connection_) return false;
 
+    LOGD("+---- Getting Users");
+
     try
     {
         pqxx::nontransaction nt(*connection_);
@@ -40,7 +44,7 @@ bool PostgresSQLResourceAcquirer::GetUsers(std::unordered_map<uint64_t, User*>& 
         {
             User* user = new User(it[0].as<int>(), it[1].as<std::string>(), it[2].as<std::string>());
             users.emplace(user->id(), user);
-            LOGD("Adding User: %s", user->c_str());
+            LOGD("| Adding User: %s", user->c_str());
         }
     }
     catch (const std::exception& e)
@@ -56,6 +60,8 @@ bool PostgresSQLResourceAcquirer::GetGroups(std::unordered_map<uint64_t, Group*>
 {
     if (!connection_) return false;
 
+    LOGD("+---- Getting Groups");
+
     try
     {
         pqxx::nontransaction nt(*connection_);
@@ -65,7 +71,7 @@ bool PostgresSQLResourceAcquirer::GetGroups(std::unordered_map<uint64_t, Group*>
         {
             Group* group = new Group(it[0].as<int>(), it[1].as<std::string>());
             groups.emplace(group->id(), group);
-            LOGD("Adding group: %s", group->c_str());
+            LOGD("| Adding group: %s", group->c_str());
         }
     }
     catch (const std::exception& e)
@@ -83,6 +89,8 @@ bool PostgresSQLResourceAcquirer::GetFolders(std::unordered_map<uint64_t, Resour
 {
     if (!connection_) return false;
 
+    LOGD("+---- Getting Folders");
+
     try
     {
         pqxx::nontransaction nt(*connection_);
@@ -93,13 +101,13 @@ bool PostgresSQLResourceAcquirer::GetFolders(std::unordered_map<uint64_t, Resour
             auto it_u = users.find(it[6].as<uint64_t>());
             if (it_u==users.end())
             {
-                LOGD("User with id: %ju not found. Skipping entry.", it[6].as<uint64_t>());
+                LOGD("* User with id: %ju not found. Skipping entry.", it[6].as<uint64_t>());
                 continue;
             }
             auto it_g = groups.find(it[7].as<uint64_t>());
             if (it_g==groups.end())
             {
-                LOGD("Group with id: %ju not found. Skipping entry.", it[7].as<uint64_t>());
+                LOGD("* Group with id: %ju not found. Skipping entry.", it[7].as<uint64_t>());
                 continue;
             }
 
@@ -110,7 +118,7 @@ bool PostgresSQLResourceAcquirer::GetFolders(std::unordered_map<uint64_t, Resour
                                                         it[2].as<std::string>(), it[3].as<std::string>(),
                                                         it[4].as<std::string>(), it[5].as<uint64_t>());
             folders.emplace(folder->id(), folder);
-            LOGD("Adding folder: %s", folder->c_str());
+            LOGD("| Adding folder: %s", folder->c_str());
         }
     }
     catch (const std::exception& e)
@@ -128,6 +136,8 @@ bool PostgresSQLResourceAcquirer::GetFiles(std::unordered_map<uint64_t, Resource
 {
     if (!connection_) return false;
 
+    LOGD("+---- Getting Files");
+
     try
     {
         pqxx::nontransaction nt(*connection_);
@@ -138,13 +148,13 @@ bool PostgresSQLResourceAcquirer::GetFiles(std::unordered_map<uint64_t, Resource
             auto it_u = users.find(it[7].as<uint64_t>());
             if (it_u==users.end())
             {
-                LOGD("User with id: %ju not found. Skipping entry.", it[6].as<uint64_t>());
+                LOGD("* User with id: %ju not found. Skipping entry.", it[6].as<uint64_t>());
                 continue;
             }
             auto it_g = groups.find(it[8].as<uint64_t>());
             if (it_g==groups.end())
             {
-                LOGD("Group with id: %ju not found. Skipping entry.", it[7].as<uint64_t>());
+                LOGD("* Group with id: %ju not found. Skipping entry.", it[7].as<uint64_t>());
                 continue;
             }
 
@@ -157,7 +167,7 @@ bool PostgresSQLResourceAcquirer::GetFiles(std::unordered_map<uint64_t, Resource
                                                   it[6].as<uint64_t>());
 
             files.emplace(file->id(), file);
-            LOGD("Adding File: %s", file->c_str());
+            LOGD("| Adding File: %s", file->c_str());
         }
     }
     catch (const std::exception& e)

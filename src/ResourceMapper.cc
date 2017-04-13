@@ -12,6 +12,8 @@ public:
 
 ResourceMapper::ResourceMapper()
 {
+    LOGD("+---- Resource Mapper");
+
     PostgresSQLResourceAcquirer psra(config_.GetConnectionString());
 
     if (!psra.Connect()

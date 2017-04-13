@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
 
     json final_json;
 
-    final_json["folders"].push_back(resource_folder.as_json());
-    final_json["files"].push_back(resource_file.as_json());
+    final_json["folders"].push_back(resource_folder.as_json(nullptr));
+    final_json["files"].push_back(resource_file.as_json(nullptr));
 
     std::cout << final_json << std::endl;
 

@@ -1,9 +1,11 @@
 #include "Config.h"
 #include "Logger.h"
 #include "json.hpp"
+#include "InetUtils.h"
 
 #include <fstream>
 #include <sstream>
+
 
 namespace vrs {
 
@@ -60,9 +62,21 @@ Config::Config()
     }
     catch (std::exception& e)
     {
-        VRS_LOG_DEBUG("Error: Parsing config file [%s] : %s", CONFIG_FILE_PATH, e.what());
+        VRS_LOG_DEBUG("Error: Parsing config file [%s] : %s",
+                      CONFIG_FILE_PATH, e.what());
         return;
     }
+
+     if (!InetUtils::GetIPAddressFromHost(resource_acquirer_host_,
+                                          resource_acquirer_ip_))
+    {
+        VRS_LOG_DEBUG("Cannot resolve [%s]", resource_acquirer_host_.c_str());
+        return;
+    }
+
+    VRS_LOG_DEBUG("Resolved %s to %s",
+                  resource_acquirer_host_.c_str(),
+                  resource_acquirer_ip_.c_str());
 
     config_ok_ = true;
 
@@ -84,7 +98,7 @@ const std::string Config::GetConnectionString() const
         return "dbname=" + resource_acquirer_db_
             + " user=" + resource_acquirer_user_
             + " password=" + resource_acquirer_password_
-            + " hostaddr=" + resource_acquirer_host_
+            + " hostaddr=" + resource_acquirer_ip_
             + " port=" + ss_port.str()
             + " requiressl=" + ss_ssl.str();
 

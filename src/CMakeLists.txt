@@ -52,7 +52,7 @@ message("| CPPNETLIB I(${CPPNETLIB_INCLUDE_DIRS}) L(${CPPNETLIB_LIBRARIES})")
 
 add_library (vrservice STATIC HTTPServer.cc ResourceFolder.cc ResourceFile.cc
   ResourceView.cc User.cc Group.cc Logger.cc PostgresSQLResourceAcquirer.cc Config.cc
-  URIUtils.cc ResourceMapper.cc)
+  URIUtils.cc ResourceMapper.cc InetUtils.cc)
 
 add_executable(${EXECNAME} main.cc)
 include_directories( ${CPPNETLIB_INCLUDE_DIRS} )

@@ -2,7 +2,6 @@
 #define _VRS_REQUEST_HANDLER_H_
 
 #include "Logger.h"
-
 #include "HTTPRequestGETHandler.h"
 
 #include <boost/network/protocol/http/server.hpp>
@@ -18,26 +17,40 @@ public:
                      http_server::connection_ptr connection)
     {
 
-        VRS_LOG_INFO("Request: [%s][%s]", request.method.c_str(), request.destination.c_str());
+        VRS_LOG_INFO("Request: [%s][%s]",
+                     request.method.c_str(), request.destination.c_str());
 
         TimeMeasurer time_measurer;
 
-        const std::map<std::string, std::string> headers ({{"Content-Type", "text/plain"}});
+        const std::map<std::string, std::string> headers =
+            {{"Content-Type", "text/plain"}};
 
         std::string returned_msg;
 
-        if (request.method.c_str()[0]=='G')
+        switch (request.method.c_str()[0])
         {
-            HTTPRequestGETHandler GET_handler;
-            GET_handler.ProcessRequest(request, connection, returned_msg);
-        }
-        else if (request.method.c_str()[0]=='P')
-        {
-            if (request.method.c_str()[1]=='O')
+            case 'G': // GET
             {
-                // POST ---
+                HTTPRequestGETHandler GET_handler;
+                GET_handler.ProcessRequest(request, connection, returned_msg);
+                break;
             }
-            // else if (request.method.c_str()[1]=='U') { /* PUT */  }
+            case 'P': // POST, PUT, PATCH
+            {
+                switch (request.method.c_str()[1])
+                {
+                    case 'O': // POST
+                        break;
+                    case 'U': // PUT
+                        break;
+                    case 'A': // PATCH
+                        break;
+                }
+            }
+            case 'D': // DELETE
+            {
+                break;
+            }
         }
 
         connection->set_headers(headers);
@@ -49,7 +62,7 @@ public:
 
     void log(http_server::string_type const& info)
     {
-        std::cerr << "ERROR: " << info << '\n';
+        VRS_LOG_DEBUG(info.c_str());
     }
 };
 

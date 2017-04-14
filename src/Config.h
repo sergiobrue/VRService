@@ -36,6 +36,8 @@ private:
     std::string resource_acquirer_password_;
     std::string resource_acquirer_db_;
     std::string resource_acquirer_host_;
+    std::string resource_acquirer_ip_;
+
     uint16_t    resource_acquirer_port_;
     bool        resource_acquirer_require_ssl_;
 

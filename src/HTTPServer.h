@@ -16,11 +16,10 @@ public:
 private:
     HTTPRequestHandler   requestHandler_;
     http_server::options options_;
-    http_server          server_;
-
+    std::shared_ptr<http_server>  server_;
 
     // SSL
-    boost::asio::ssl::context ctx_;
+    std::shared_ptr<boost::asio::ssl::context> ctx_;
 };
 
 }

@@ -1,9 +1,15 @@
 #ifndef _RESOURCE_MAPPER_H_
 #define _RESOURCE_MAPPER_H_
 
-#include "Config.h"
+#include <unordered_map>
+
 
 namespace vrs {
+
+class User;
+class Group;
+class ResourceFile;
+class ResourceFolder;
 
 class ResourceMapper
 {
@@ -24,8 +30,6 @@ public:
 private:
     ResourceMapper();
     ~ResourceMapper();
-
-    Config config_;
 
     std::unordered_map<uint64_t, User*> users_;
     std::unordered_map<uint64_t, Group*> groups_;

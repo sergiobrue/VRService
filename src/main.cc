@@ -1,6 +1,7 @@
 #include "HTTPServer.h"
 #include "Logger.h"
 #include "ResourceMapper.h"
+#include "Config.h"
 
 #include <iostream>
 
@@ -24,6 +25,14 @@ int main(int argc, char *argv[])
 
     if (to_stdout) vrs::Logger::instance().EnableStdout();
     vrs::Logger::instance().SetLevel(log_level);
+
+
+    vrs::Config& config = vrs::Config::instance();
+    if (!config.is_OK())
+    {
+        VRS_LOG_DEBUG("Error parsing the config");
+        return -2;
+    }
 
 
     try

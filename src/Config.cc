@@ -19,6 +19,7 @@ class ConfigFileParsingException : public std::exception
 
 
 Config::Config()
+    : config_ok_(false)
 {
     const char* const CONFIG_FILE_PATH = "/etc/vrs.conf";
 
@@ -27,7 +28,7 @@ Config::Config()
     if (!input_file.is_open())
     {
         VRS_LOG_DEBUG("Error: Opening config file [%s]", CONFIG_FILE_PATH);
-        throw ConfigFileOpenException();
+        return;
     }
 
     nlohmann::json json_obj;
@@ -50,14 +51,20 @@ Config::Config()
         resource_acquirer_port_ = json_obj["port"];
         VRS_LOG_DEBUG("| Getting RequireSSL");
         resource_acquirer_require_ssl_ = json_obj["requiressl"];
+        VRS_LOG_DEBUG("| Getting SSL Chain File");
+        ssl_chain_file_path_ = json_obj["chain_file"];
+        VRS_LOG_DEBUG("| Getting SSL Cert File");
+        ssl_cert_file_path_ = json_obj["cert_file"];
+        VRS_LOG_DEBUG("| Getting SSL PrivKey File");
+        ssl_private_key_file_path_ = json_obj["priv_key_file"];
     }
-
     catch (std::exception& e)
     {
-        VRS_LOG_DEBUG("Error: Parsing config file [%s] - %s", CONFIG_FILE_PATH, e.what());
-        throw ConfigFileParsingException();
+        VRS_LOG_DEBUG("Error: Parsing config file [%s] : %s", CONFIG_FILE_PATH, e.what());
+        return;
     }
 
+    config_ok_ = true;
 
 }
 
@@ -65,7 +72,7 @@ Config::~Config()
 {
 }
 
-std::string Config::GetConnectionString() const
+const std::string Config::GetConnectionString() const
 {
     if (resource_acquirer_name_ == "psql")
     {

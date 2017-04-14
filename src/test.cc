@@ -32,15 +32,9 @@ int main(int argc, char *argv[])
 
     std::cout << final_json << std::endl;
 
-    try
-    {
-        vrs::Config config;
+    vrs::Config& config = vrs::Config::instance();
+    if (config.is_OK())
         std::cout << config.GetConnectionString() << std::endl;
-    }
-    catch (std::exception& e)
-    {
-        std::cout << e.what() << std::endl;
-    }
 
     vrs::PostgresSQLResourceAcquirer psra("dbname=vrdb user=vr password=vr hostaddr=192.168.1.200 port=5432 requiressl=1");
 

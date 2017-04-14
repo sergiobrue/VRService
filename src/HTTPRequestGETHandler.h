@@ -3,6 +3,11 @@
 
 #include "HTTPRequestMethodHandler.h"
 
+#include "User.h"
+#include "Group.h"
+#include "ResourceFile.h"
+#include "ResourceFolder.h"
+
 #include "Logger.h"
 #include "ResourceMapper.h"
 #include "TimeMeasurer.h"

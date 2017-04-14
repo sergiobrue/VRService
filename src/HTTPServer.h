@@ -3,6 +3,8 @@
 
 #include "HTTPRequestHandler.h"
 
+#include <boost/asio/ssl.hpp>
+
 namespace vrs {
 
 class HTTPServer {
@@ -16,6 +18,9 @@ private:
     http_server::options options_;
     http_server          server_;
 
+
+    // SSL
+    boost::asio::ssl::context ctx_;
 };
 
 }

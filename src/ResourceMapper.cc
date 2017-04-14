@@ -2,6 +2,12 @@
 #include "PostgresSQLResourceAcquirer.h"
 #include "URIUtils.h"
 #include "Logger.h"
+#include "Config.h"
+#include "User.h"
+#include "Group.h"
+#include "ResourceFile.h"
+#include "ResourceFolder.h"
+
 
 namespace vrs {
 
@@ -14,7 +20,7 @@ ResourceMapper::ResourceMapper()
 {
     VRS_LOG_DEBUG("+---- Resource Mapper");
 
-    PostgresSQLResourceAcquirer psra(config_.GetConnectionString());
+    PostgresSQLResourceAcquirer psra(Config::instance().GetConnectionString());
 
     if (!psra.Connect()
         || !psra.GetUsers(users_)

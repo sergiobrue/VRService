@@ -73,6 +73,9 @@ This is an example:
     "db":"vrdb",
     "host":"192.168.1.200",
     "port":5432,
-    "requiressl": true
+    "requiressl": true,
+    "cert_file":"",
+    "chain_file":"",
+    "priv_key_file":""
 }
 ```

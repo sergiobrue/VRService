@@ -16,7 +16,7 @@ In order to compile you first need to install all the dependecies.
 - libcppnet
 - libssl-dev
 
-To install in Debian:
+To install the dependecies to COMPILE in Debian:
 ```
 $ aptitude install libsll-dev libcppnetlib-dev libpqxx-dev libboost-all-dev 
 ```
@@ -24,6 +24,11 @@ $ aptitude install libsll-dev libcppnetlib-dev libpqxx-dev libboost-all-dev
 Please note that the current version of cppnet-lib in Debian is version 0.11.
 You can download a precompiled binary of a newer version from https://goo.gl/Qxwf3X
 
+
+To install the dependecies to run the program in Debian:
+```
+aptitude install libboost-system1.62.0 libboost-thread1.62.0 libboost-chrono1.62 libboost-date-time1.62.0 libboost-atomic1.62.0 libssl1.1 libpqxx-4.0v5
+```
 
 ## Running CMake
 

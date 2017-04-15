@@ -67,15 +67,15 @@ This is an example:
 
 ```json
 {
-    "acquirer":"psql",
-    "user":"vr",
-    "password":"vr",
-    "db":"vrdb",
-    "host":"192.168.1.200",
-    "port":5432,
-    "requiressl": true,
-    "cert_file":"",
-    "chain_file":"",
-    "priv_key_file":""
+  "acquirer":"psql",
+  "user":"vr",
+  "password":"vr",
+  "db":"vrdb",
+  "host":"127.0.0.1",
+  "port":5432,
+  "requiressl": true,
+  "cert_file":"/etc/letsencrypt/live/vrs.brue.org/cert.pem",
+  "chain_file":"/etc/letsencrypt/live/vrs.brue.org/chain.pem",
+  "priv_key_file":"/etc/letsencrypt/live/vrs.brue.org/privkey.pem"
 }
 ```

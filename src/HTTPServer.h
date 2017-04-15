@@ -14,9 +14,14 @@ public:
     void Run();
 
 private:
+    void shut_down(const boost::system::error_code& error, int signal,
+                   std::shared_ptr<http_server> p_server_instance);
+
     HTTPRequestHandler   requestHandler_;
     http_server::options options_;
     std::shared_ptr<http_server>  server_;
+
+    std::shared_ptr<boost::asio::io_service> io_service_;
 
     // SSL
     std::shared_ptr<boost::asio::ssl::context> ctx_;

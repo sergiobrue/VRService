@@ -17,6 +17,8 @@ if (CMAKE_BUILD_TYPE)
   message("| BUILD TYPE ${CMAKE_BUILD_TYPE}")
 endif(CMAKE_BUILD_TYPE)
 
+set (CMAKE_CXX_FLAGS "-DBOOST_NETWORK_ENABLE_HTTPS ${CMAKE_CXX_FLAGS}")
+
 
 # Release and debug --------------------------
 if(NOT CMAKE_BUILD_TYPE STREQUAL "RELEASE")

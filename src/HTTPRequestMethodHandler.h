@@ -2,7 +2,6 @@
 #define _VRS_HTTP_REQUEST_METHOD_HANDLER_H_
 
 #include <boost/network/include/http/server.hpp>
-#include <boost/network/utils/thread_group.hpp>
 
 #include <iostream>
 

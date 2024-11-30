@@ -1,4 +1,7 @@
-[![build status](https://gitlab.com/VirtualDreams/VRService/badges/master/build.svg)](https://gitlab.com/VirtualDreams/VRService/commits/master)
+# NOTE: Abandoned 🗃
+
+This was meant to be the back-end of a service which served files and resources for a VR application. I abandoned it in a couple of weeks since the idea quickly fell apart. 
+
 
 # What's VR Service
 
